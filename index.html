@@ -10,6 +10,16 @@
         <input type="file" name="avatar" />
         <button></button>
       </form>
+      <img id="image" src="" alt="Blob Image">
       
 </body>
+<script>
+    fetch('/image')
+      .then(response => response.blob())
+      .then(blob => {
+        const imageUrl = URL.createObjectURL(blob);
+        document.getElementById('image').src = imageUrl;
+      })
+      .catch(error => console.error('Error:', error));
+</script>
 </html>
