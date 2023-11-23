@@ -6,14 +6,32 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/profile" method="post" enctype="multipart/form-data">
-        <input type="file" name="avatar" />
-        <button></button>
+    <form id="form"enctype="multipart/form-data">
+        <input id="imgUpload" type="file"/>
+        <button>send</button>
       </form>
-      <img id="image" src="" alt="Blob Image">
+      <img id="image" src="" alt="Blob Image" style="height: 200px;">
       
 </body>
+
 <script>
+  const form = document.getElementById("form")
+  form.addEventListener("submit", (e) => {
+    console.log(e)
+    uploadImage(e)
+  } )
+
+  async function uploadImage(e){
+    e.preventDefault()
+    const formData = new FormData()
+    formData.append("file", document.getElementById("imgUpload").files[0])
+    fetch("http://localhost:8080/upload/1",{ //skift id
+      method: "POST",
+      body: formData
+    })
+  }
+
+
     fetch('/image')
       .then(response => response.blob())
       .then(blob => {
